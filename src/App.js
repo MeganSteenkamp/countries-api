@@ -16,7 +16,7 @@ const App = () => {
   const filterCountries = (input) => {
     const filtered = countryListDefault.filter((country) => {
       const countryName = country.toLowerCase();
-      return countryName.includes(input);
+      return countryName.includes(input.toLowerCase());
     });
     setCountryList(filtered);
   };
@@ -36,7 +36,7 @@ const App = () => {
       setCountryList(
         countryNames.filter((country) => {
           const countryName = country.toLowerCase();
-          return countryName.includes(input);
+          return countryName.includes(input.toLowerCase());
         })
       );
     } else {
@@ -50,19 +50,30 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
+      <section className="hero bd-hero bd-is-basic">
+        <div className="hero-body">
+          <p className="title">Countries</p>
+          <p className="subtitle">Search the countries of the world</p>
+        </div>
+      </section>
+
       {isLoading || !countryList ? (
-        <div>Loading...</div>
+        <div className="box">
+          <progress className="progress is-medium is-info">Loading...</progress>
+        </div>
       ) : (
-        <div>
-          <Search
-            searchQuery={input}
-            setSearchQuery={setInput}
-            filterCountries={filterCountries}
-          />
-          <CountryList
-            countryList={input === '' ? countryListDefault : countryList}
-          />
+        <div className="box">
+          <div className="content">
+            <Search
+              searchQuery={input}
+              setSearchQuery={setInput}
+              filterCountries={filterCountries}
+            />
+            <CountryList
+              countryList={input === '' ? countryListDefault : countryList}
+            />
+          </div>
         </div>
       )}
     </div>
